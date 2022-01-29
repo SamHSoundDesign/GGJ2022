@@ -101,7 +101,7 @@ public class GridController : MonoBehaviour
         //Check newPos is within bounds of grid
         if (newPos.x < 1 || newPos.x > playGrid.gridWidth)
         {
-            newPos.x = currentBlock.pos.x;
+            newPos.x = block.pos.x;
         }
 
         //Check for a block in the way of the newPos
@@ -164,7 +164,8 @@ public class GridController : MonoBehaviour
     }
     private void CheckCluesForMatching(Block block)
     {
-        bool matchFound = false;
+        List<Block> matchedBlocks = new List<Block>();
+
 
         //CheckBelow
         for (int i = 0; i < blocks.Count; i++)
@@ -173,10 +174,9 @@ public class GridController : MonoBehaviour
             {
                 if(blocks[i].clue == block.answer)
                 {
-                    matchFound = true;
-                   
-                    ClearSolvedBlocks(block, blocks[i]);
-                    return;
+                    matchedBlocks.Add(blocks[i]);
+                    //ClearSolvedBlocks(block, blocks[i]);
+                    //return;
                 }
             }
         }
@@ -188,10 +188,10 @@ public class GridController : MonoBehaviour
             {
                 if (blocks[i].clue == block.answer)
                 {
-                    matchFound = true;
-                  
-                    ClearSolvedBlocks(block, blocks[i]);
-                    return;
+                    matchedBlocks.Add(blocks[i]);
+
+                    //ClearSolvedBlocks(block, blocks[i]);
+                    //return;
                 }
             }
         }
@@ -201,19 +201,48 @@ public class GridController : MonoBehaviour
         {
             if (blocks[i].pos == new Vector2Int(block.pos.x + 1, block.pos.y))
             {
-                if (blocks[i].clue == currentBlock.answer)
+                if (blocks[i].clue == block.answer)
                 {
-                    matchFound = true;
+                    matchedBlocks.Add(blocks[i]);
 
-                    ClearSolvedBlocks(blocks[i], block);
-                    return;
+                    //ClearSolvedBlocks(blocks[i], block);
+                    //return;
 
                 }
             }
         }
 
+
+        if(matchedBlocks.Count > 0)
+        {
+            ClearSolvedBlock(block);
+
+            for (int i = 0; i < matchedBlocks.Count; i++)
+            {
+                ClearSolvedBlock(matchedBlocks[i]);
+            }
+
+            for (int i = 0; i < matchedBlocks.Count; i++)
+            {
+                UpdatePositionOfAllAboveBlocks(matchedBlocks[i].pos);
+            }
+        }
+
        
 
+       
+
+    }
+
+    private void ClearSolvedBlock(Block block)
+    {
+        block.BlockSolved();
+
+        DestroyBlock(block);
+
+        blocks.Remove(block);
+
+       
     }
     private void ClearSolvedBlocks(Block blockA, Block blockB)
     {
