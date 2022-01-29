@@ -32,6 +32,10 @@ public class GridController : MonoBehaviour
     public void NewBlock()
     {
         isA = !isA;
+
+        boardA.RevealBoardDetails();
+        boardB.RevealBoardDetails();
+
         Clue newClue = clues.GetNewClue(isA);
         Block newBlock = new Block(isA , startingGridRef , blockPrefab , boardA , boardB , newClue);
 

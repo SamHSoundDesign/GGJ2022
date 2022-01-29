@@ -7,18 +7,20 @@ using UnityEngine;
 public class BlockObject : MonoBehaviour
 {
     private Board board;
-    private TextMeshPro tmp;
+    public TextMeshPro tmp;
     private SpriteRenderer rend;
+    public bool isA;
 
-    public void Setup(Vector2Int gridRef , string clue, Board board , Color colorA , Color colorB)
+    public void Setup(Vector2Int gridRef , string clue, Board board , Color colorA , Color colorB , bool isA)
     {
         tmp = GetComponentInChildren<TextMeshPro>();
         rend = GetComponent<SpriteRenderer>();
+        this.isA = isA;
 
         this.board = board;
         SetPosition(gridRef);
         tmp.text = clue;
-
+       
         SetStyling(colorA , colorB);
     }
 
