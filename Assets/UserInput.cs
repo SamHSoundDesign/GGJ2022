@@ -46,7 +46,7 @@ public class UserInput : MonoBehaviour
 
         if(movement != Vector2Int.zero)
         {
-            blockController.MoveBlock(movement);
+            blockController.UserMoveBlock(movement);
         }
 
     }

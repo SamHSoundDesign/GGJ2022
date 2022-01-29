@@ -39,6 +39,12 @@ public class GridController : MonoBehaviour
         blocks.Add(newBlock);
 
     }
+
+    public void UserMoveBlock(Vector2Int movement)
+    {
+        MoveBlock(currentBlock, movement);
+    }
+
     public Vector3 ConvertGridRefToPosition(Vector2Int gridRef)
     {
         return new Vector3(gridRef.x, gridRef.y, 0);
@@ -47,68 +53,80 @@ public class GridController : MonoBehaviour
     {
         return new Vector2Int((int)position.x, (int)position.y);
     }
-    public void MoveBlock(Vector2Int movement)
+    private void MoveBlock(Block block , Vector2Int movement)
     {
-        Vector2Int newPos = currentBlock.pos + movement;
+        Vector2Int newPos = block.pos + movement;
 
-        newPos = ConfirnNewPosition(newPos);
+        newPos = ConfirmNewPosition(newPos , movement , block);
 
-        //Is Horizontal movement valid
-        if (CheckForBlockAdjacent(newPos, movement.x))
+        block.pos = newPos;
+        block.UpdateBlockObjectPositions(newPos);
+
+        if(CheckIfGrounded(block))
         {
-            newPos.x = currentBlock.pos.x;
+            block.grounded = true;
+            CheckCluesForMatching(block);
+
+            if(block == currentBlock)
+            {
+                NewBlock();
+            }
         }
 
+       
+    }
+    private bool CheckIfGrounded(Block block)
+    {
+        bool isGrounded = false;
+
+        if(block.pos.y == 1)
+        {
+            isGrounded = true;
+            return isGrounded;
+        }
+
+        for (int i = 0; i < blocks.Count; i++)
+        {
+            if (blocks[i].pos == new Vector2Int(block.pos.x, block.pos.y - 1))
+            {
+                isGrounded = true;
+                return isGrounded;
+            }
+        }
+
+        return isGrounded;
+    }
+    private Vector2Int ConfirmNewPosition(Vector2Int newPos, Vector2Int movement , Block block)
+    {
+        //Check newPos is within bounds of grid
         if (newPos.x < 1 || newPos.x > playGrid.gridWidth)
         {
             newPos.x = currentBlock.pos.x;
         }
 
+        //Check for a block in the way of the newPos
 
-        //Mark block as grounded if it is about to hit the ground
-        if(newPos.y == 1)
+        Block blockInWay = CheckIfMovementBlocked(newPos);
+
+        if (blockInWay != null)
         {
-            currentBlock.grounded = true;
-            currentBlock.pos = newPos;
-
-            currentBlock.UpdateBlockObjectPositions(newPos);
-
-            SetAsGrounded();
-            return;
-        }
-
-        //If block is NOT about to hit the ground, mark it as grounded IF is about to land on another block
-        if (CheckForBlockBelow(newPos))
-        {
-            currentBlock.grounded = true;
-            currentBlock.pos = newPos;
-            currentBlock.UpdateBlockObjectPositions(newPos);
-            SetAsGrounded();
-
-            return;
-        }
-        else
-        {
-            if (CheckForBlockAdjacent(newPos, movement.x))
+            if(blockInWay.pos.x == newPos.x)
             {
-                newPos.x = currentBlock.pos.x;
+                newPos.x = block.pos.x;
+            }
+
+            if(blockInWay.pos.y == newPos.y)
+            {
+                newPos.y = block.pos.y;
             }
         }
 
-        CheckMovement(newPos);
-        currentBlock.pos = newPos;
-        currentBlock.UpdateBlockObjectPositions(newPos);
-
-    }
-
-    private Vector2Int ConfirnNewPosition(Vector2Int newPos)
-    {
         return newPos;
     }
-
-    private bool CheckForBlockAdjacent(Vector2Int newPos , int xMoveDirection)
+    private Block CheckIfMovementBlocked(Vector2Int newPos)
     {
         Block blockAdjacent = null;
+
         for (int i = 0; i < blocks.Count; i++)
         {
             if (blocks[i].pos == newPos)
@@ -118,25 +136,9 @@ public class GridController : MonoBehaviour
             }
         }
 
-        if (blockAdjacent == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-
-    }
-    private Vector2Int CheckMovement(Vector2Int newPos)
-    {
-        if (CheckForBlockBelow(newPos))
-        {
-            currentBlock.grounded = true;
-            NewBlock();
-        }
+        return blockAdjacent;
         
-        return newPos;
+
     }
     private bool CheckForBlockBelow(Vector2Int newPos)
     {
@@ -160,78 +162,58 @@ public class GridController : MonoBehaviour
             return true;
         }
     }
-    private void SetAsGrounded()
-    {
-        CheckCluesForMatching();
-        NewBlock();
-    }
-    private void CheckCluesForMatching()
+    private void CheckCluesForMatching(Block block)
     {
         bool matchFound = false;
+
         //CheckBelow
         for (int i = 0; i < blocks.Count; i++)
         {
-            if(blocks[i].pos == new Vector2Int(currentBlock.pos.x , currentBlock.pos.y - 1))
+            if(blocks[i].pos == new Vector2Int(block.pos.x , block.pos.y - 1))
             {
-                if(blocks[i].clue == currentBlock.answer)
+                if(blocks[i].clue == block.answer)
                 {
                     matchFound = true;
                    
-                    ClearSolvedBlocks(currentBlock, blocks[i]);
+                    ClearSolvedBlocks(block, blocks[i]);
                     return;
                 }
             }
         }
-
-        //if(matchFound)
-        //{
-        //    BlockSolved();
-        //    return matchFound;
-        //}
 
         //Check Left
         for (int i = 0; i < blocks.Count; i++)
         {
-            if (blocks[i].pos == new Vector2Int(currentBlock.pos.x - 1, currentBlock.pos.y))
+            if (blocks[i].pos == new Vector2Int(block.pos.x - 1, block.pos.y))
             {
-                if (blocks[i].clue == currentBlock.answer)
+                if (blocks[i].clue == block.answer)
                 {
                     matchFound = true;
                   
-                    ClearSolvedBlocks(currentBlock, blocks[i]);
+                    ClearSolvedBlocks(block, blocks[i]);
                     return;
                 }
             }
         }
-
-        //if (matchFound)
-        //{
-        //    BlockSolved();
-        //    return matchFound;
-        //}
 
         //Check Right
         for (int i = 0; i < blocks.Count; i++)
         {
-            if (blocks[i].pos == new Vector2Int(currentBlock.pos.x + 1, currentBlock.pos.y))
+            if (blocks[i].pos == new Vector2Int(block.pos.x + 1, block.pos.y))
             {
                 if (blocks[i].clue == currentBlock.answer)
                 {
                     matchFound = true;
 
-                    ClearSolvedBlocks(blocks[i], currentBlock);
+                    ClearSolvedBlocks(blocks[i], block);
                     return;
 
                 }
             }
         }
 
-        
-        //if(matchFound)
-        //{
-        //    BlockSolved();
-        //}
-        //return matchFound;
+       
+
     }
     private void ClearSolvedBlocks(Block blockA, Block blockB)
     {
@@ -254,10 +236,11 @@ public class GridController : MonoBehaviour
         {
             if(blocks[i].pos == new Vector2Int(pos.x , pos.y + 1))
             {
-                currentBlock = blocks[i];
-                MoveBlock(new Vector2Int(0, -1));
+                //currentBlock = blocks[i];
+                blocks[i].grounded = false;
+                MoveBlock(blocks[i] , new Vector2Int(0, -1));
 
-                UpdatePositionOfAllAboveBlocks(new Vector2Int(pos.x, pos.y));
+                UpdatePositionOfAllAboveBlocks(new Vector2Int(blocks[i].pos.x , blocks[i].pos.y + 1));
             }
         }
     }
