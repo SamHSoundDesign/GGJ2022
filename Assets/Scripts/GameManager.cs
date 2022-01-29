@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public GridController gridController;
     private int targetScore;
 
+    public ScreenFades screenFade;
+
     private void Start()
     {
         if (instance == null)
@@ -32,14 +34,17 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
+        screenFade = FindObjectOfType<ScreenFades>();
+        screenFade.Setup();
         pauseMenu = FindObjectOfType<PauseMenu>();
         levelEnd = FindObjectOfType<LevelEnd>();
-        levelEnd.gameObject.SetActive(false);
 
         gameState = GameStates.InGame;
         levelData = GetComponent<LevelData>();
         userInput = GetComponent<UserInput>();
         SetupLevel();
+
+        screenFade.FadeIn();
 
     }
 
@@ -50,10 +55,12 @@ public class GameManager : MonoBehaviour
         {
             if (gameState == GameStates.InGame)
             {
+                screenFade.FadeOut();
                 PauseMenu.instance.OpenPauseMenu();
             }
             else if (gameState == GameStates.PauseMenu)
             {
+                screenFade.FadeIn();
                 PauseMenu.instance.ClosePauseMenu();
             }
         }
@@ -103,6 +110,8 @@ public class GameManager : MonoBehaviour
 
     private void LevelWon()
     {
+        screenFade.FadeIn();
+
         gameState = GameStates.LevelComplete;
         levelEnd.gameObject.SetActive(true);
         levelEnd.OpenMenu();
