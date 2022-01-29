@@ -138,8 +138,8 @@ public class GameManager : MonoBehaviour
 
         targetScore = levelSO.targetScore;
 
-        boardA.SetBoardPosition(new Vector3(-levelSO.gridWidth , 0, 0));
-        boardB.SetBoardPosition(new Vector3(levelSO.gridWidth , 0, 0));
+        boardA.SetBoardPosition(new Vector3(-levelSO.gridWidth - 3 , 4, 0));
+        boardB.SetBoardPosition(new Vector3(levelSO.gridWidth - 3, 4, 0));
 
         playGrid.gridHeight = levelSO.failHeight;
         playGrid.gridWidth = levelSO.gridWidth;

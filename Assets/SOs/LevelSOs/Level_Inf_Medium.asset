@@ -15,6 +15,6 @@ MonoBehaviour:
   levelID: 98
   clues: []
   levelSpeed: 3
-  gridWidth: 7
-  failHeight: 7
+  gridWidth: 5
+  failHeight: 9
   targetScore: 5
