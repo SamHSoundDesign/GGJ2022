@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PauseMenu pauseMenu;
 
     private GameStates gameState;
+    public int score;
+    public GameObject inGameUI;
 
     private void Start()
     {
@@ -66,11 +69,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-
-
-
-
+    public void UpdateScore(int score)
+    {
+        this.score += score;
+        inGameUI.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
+    }
 }
 
 

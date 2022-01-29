@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1666882378582961238}
   - component: {fileID: 1666882378582961237}
-  - component: {fileID: 8148657700546208514}
+  - component: {fileID: 203912508637923637}
+  - component: {fileID: 8475859552423172175}
   m_Layer: 0
   m_Name: Block
   m_TagString: Untagged
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8148657700546208514
+--- !u!114 &203912508637923637
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,16 +95,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1666882378582961236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05137af76be52c248b39907a9bf0a336, type: 3}
+  m_Script: {fileID: 11500000, guid: 890aeebcd1e169949ae702d0bb93086c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clue: 
-  answer: 
-  grounded: 0
-  pos: {x: 0, y: 0}
-  isA: 0
-  clueSolved: 0
-  solvedColor: {r: 0.6484885, g: 1, b: 0.35444742, a: 1}
+--- !u!114 &8475859552423172175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666882378582961236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97693f322ec6189468a0e7b82a1d0796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8891432143265175511
 GameObject:
   m_ObjectHideFlags: 0

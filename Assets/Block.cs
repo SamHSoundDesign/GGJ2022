@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block
 {
     public string clue;
     public string answer;
@@ -11,28 +11,49 @@ public class Block : MonoBehaviour
 
     public Vector2Int pos;
 
-    public bool isA;
-
     public bool clueSolved = false;
 
-    private SpriteRenderer spriteRender;
+    public SpriteRenderer spriteRender;
 
-    public Color solvedColor;
+    public TextMeshPro tmp;
 
-    private TextMeshPro tmp;
+    public BlockObject blockObjectA;
+    public BlockObject blockObjectB;
 
+    public bool isA;
+   
 
-    private void Start()
+    
+    public Block(bool isA , Vector2Int startingGridRef, GameObject blockPrefab , Board boardA , Board boardB , Clue clue)
     {
-        spriteRender = GetComponent<SpriteRenderer>();
-        tmp = GetComponentInChildren<TextMeshPro>();
-        tmp.text = clue;
+        pos = startingGridRef;
+        this.isA = isA;
+        if (isA)
+        {
+            this.clue = clue.a;
+            answer = clue.b;
+        }
+        else
+        {
+            this.clue = clue.b;
+            answer = clue.a;
+        }
+
+        blockObjectA = boardA.NewBlockGO(startingGridRef, blockPrefab, this);
+        blockObjectB = boardB.NewBlockGO(startingGridRef, blockPrefab, this);
+
+
     }
+
     public void BlockSolved()
     {
         clueSolved = true;
-        spriteRender.color = solvedColor;
+    }
 
+    public void UpdateBlockObjectPositions(Vector2Int pos)
+    {
+        blockObjectA.SetPosition(pos);
+        blockObjectB.SetPosition(pos);
     }
     
-}
+}   

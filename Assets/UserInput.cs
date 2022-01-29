@@ -10,7 +10,7 @@ public class UserInput : MonoBehaviour
     [SerializeField] private float pauseBetweenDrops = 1;
     private float timeForNextDrop;
 
-    public BlockController blockController;
+    public GridController blockController;
 
     private void Start()
     {

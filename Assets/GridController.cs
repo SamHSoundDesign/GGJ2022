@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockController : MonoBehaviour
+public class GridController : MonoBehaviour
 {
     private Block currentBlock;
     public PlayGrid playGrid;
@@ -12,46 +12,41 @@ public class BlockController : MonoBehaviour
     private Clues clues;
     private bool isA = false;
 
+    public bool blockControllerA;
+    private BlockControllerStyling styling;
 
+    public Vector3 offset;
+
+    public Board boardA;
+    public Board boardB;
+
+    public Vector2Int startingGridRef;
+
+    
     private void Start()
     {
         clues = GetComponent<Clues>();
+        styling = GetComponent<BlockControllerStyling>();
         NewBlock();
     }
-
     public void NewBlock()
     {
         isA = !isA;
-        GameObject newBlockGO = Instantiate(blockPrefab, ConvertGridRefToPosition(new Vector2Int(3, 10)), Quaternion.identity, gameObject.transform);
-        Block newBlock = newBlockGO.GetComponent<Block>();
+        Clue newClue = clues.GetNewClue(isA);
+        Block newBlock = new Block(isA , startingGridRef , blockPrefab , boardA , boardB , newClue);
+
         currentBlock = newBlock;
         blocks.Add(newBlock);
-        currentBlock.pos = ConvertPositionToGridRef(currentBlock.gameObject.transform.position);
 
-        Clue newClue = clues.GetNewClue(isA);
-
-        if(isA)
-        {
-            currentBlock.clue = newClue.a;
-            currentBlock.answer = newClue.b;
-        }
-        else
-        {
-            currentBlock.clue = newClue.b;
-            currentBlock.answer = newClue.a;
-        }
     }
-
     public Vector3 ConvertGridRefToPosition(Vector2Int gridRef)
     {
         return new Vector3(gridRef.x, gridRef.y, 0);
     }
-
     public Vector2Int ConvertPositionToGridRef(Vector3 position)
     {
         return new Vector2Int((int)position.x, (int)position.y);
     }
-
     public void MoveBlock(Vector2Int movement)
     {
         Vector2Int newPos = currentBlock.pos + movement;
@@ -72,7 +67,9 @@ public class BlockController : MonoBehaviour
         {
             currentBlock.grounded = true;
             currentBlock.pos = newPos;
-            currentBlock.transform.position = ConvertGridRefToPosition(currentBlock.pos);
+
+            currentBlock.UpdateBlockObjectPositions(newPos);
+
             SetAsGrounded();
             return;
         }
@@ -80,14 +77,9 @@ public class BlockController : MonoBehaviour
         //If block is NOT about to hit the ground, mark it as grounded IF is about to land on another block
         if (CheckForBlockBelow(newPos))
         {
-            //if(CheckForBlockAdjacent(newPos , movement.x))
-            //{
-            //    newPos.x = currentBlock.pos.y;
-            //}
-
             currentBlock.grounded = true;
             currentBlock.pos = newPos;
-            currentBlock.transform.position = ConvertGridRefToPosition(currentBlock.pos);
+            currentBlock.UpdateBlockObjectPositions(newPos);
             SetAsGrounded();
 
             return;
@@ -102,9 +94,9 @@ public class BlockController : MonoBehaviour
 
         CheckMovement(newPos);
         currentBlock.pos = newPos;
-        currentBlock.transform.position = ConvertGridRefToPosition(newPos);
-    }
+        currentBlock.UpdateBlockObjectPositions(newPos);
 
+    }
     private bool CheckForBlockAdjacent(Vector2Int newPos , int xMoveDirection)
     {
         Block blockAdjacent = null;
@@ -160,13 +152,11 @@ public class BlockController : MonoBehaviour
             return true;
         }
     }
-
     private void SetAsGrounded()
     {
         bool clueMatched = CheckCluesForMatching();
         NewBlock();
     }
-
     private bool CheckCluesForMatching()
     {
         bool matchFound = false;
@@ -186,6 +176,7 @@ public class BlockController : MonoBehaviour
 
         if(matchFound)
         {
+            BlockSolved();
             return matchFound;
         }
 
@@ -205,6 +196,7 @@ public class BlockController : MonoBehaviour
 
         if (matchFound)
         {
+            BlockSolved();
             return matchFound;
         }
 
@@ -222,6 +214,21 @@ public class BlockController : MonoBehaviour
             }
         }
 
+        
+        if(matchFound)
+        {
+            BlockSolved();
+        }
         return matchFound;
+    }
+    public void BlockSolved()
+    {
+        GameManager.instance.UpdateScore(1);
+        //Destroy(tmp.gameObject);
+        //Destroy(gameObject);
+    }
+    public void UpdateBlockPositions()
+    {
+
     }
 }
