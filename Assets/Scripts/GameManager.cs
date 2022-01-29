@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
-        pauseMenu = PauseMenu.instance;
-        levelEnd = LevelEnd.instance;
+        pauseMenu = FindObjectOfType<PauseMenu>();
+        levelEnd = FindObjectOfType<LevelEnd>();
         levelEnd.gameObject.SetActive(false);
 
         gameState = GameStates.InGame;
@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
     private void LevelWon()
     {
         gameState = GameStates.LevelComplete;
+        levelEnd.gameObject.SetActive(true);
         levelEnd.OpenMenu();
     }
 
