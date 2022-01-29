@@ -46,4 +46,9 @@ public class PauseMenu : MonoBehaviour
     {
 
     }
+
+    public void ExitToMainMenu()
+    {
+        LevelLoader.instance.GoToMenu();
+    }
 }

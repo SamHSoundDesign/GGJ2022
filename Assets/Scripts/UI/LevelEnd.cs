@@ -36,5 +36,15 @@ public class LevelEnd : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    
+    public void ReplayLevel()
+    {
+        LevelLoader.instance.ReplayScene();
+    }
+
+    public void NextLevel()
+    {
+        LevelLoader.instance.NextScene();
+    }
+
+
 }
