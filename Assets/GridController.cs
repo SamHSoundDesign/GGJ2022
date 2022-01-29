@@ -23,6 +23,8 @@ public class GridController : MonoBehaviour
 
     private Vector2Int startingGridRef;
 
+    
+
     public void Setup(Board boardA, Board boardB, List<ClueSO> levelClues , PlayGrid playGrid)
     {
         this.boardA = boardA;
@@ -30,6 +32,7 @@ public class GridController : MonoBehaviour
         this.levelClues = levelClues;
         this.playGrid = playGrid;
         startingGridRef = new Vector2Int(playGrid.gridWidth / 2, playGrid.gridHeight);
+
 
         styling = GetComponent<BlockControllerStyling>();
         NewBlock();

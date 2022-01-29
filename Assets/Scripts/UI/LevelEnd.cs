@@ -10,15 +10,6 @@ public class LevelEnd : MonoBehaviour
 
     private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-
         gameObject.SetActive(false);
 
         anim = GetComponent<Animator>();
