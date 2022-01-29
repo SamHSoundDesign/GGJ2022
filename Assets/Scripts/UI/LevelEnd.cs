@@ -8,11 +8,12 @@ public class LevelEnd : MonoBehaviour
 
     private Animator anim;
 
-    private void Start()
+    public void Setup()
     {
-        gameObject.SetActive(false);
 
         anim = GetComponent<Animator>();
+        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     //Pause Menu animation
@@ -20,7 +21,7 @@ public class LevelEnd : MonoBehaviour
     {
         gameObject.SetActive(true);
         anim.SetTrigger("Open");
-        GameManager.instance.SetGameState(GameStates.PauseMenu);
+        
 
     }
 
@@ -32,7 +33,6 @@ public class LevelEnd : MonoBehaviour
     public void ReadyToClose()
     {
         Debug.Log("CLOSED");
-        GameManager.instance.SetGameState(GameStates.InGame);
         gameObject.SetActive(false);
     }
 

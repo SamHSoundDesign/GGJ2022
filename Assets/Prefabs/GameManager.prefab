@@ -46,11 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
-  score: 0
+  levelEnd: {fileID: 0}
+  currentScore: 0
   inGameUI: {fileID: 0}
   playGrid: {fileID: 0}
   userInput: {fileID: 0}
   gridController: {fileID: 0}
+  screenFade: {fileID: 0}
 --- !u!114 &6890294249491790891
 MonoBehaviour:
   m_ObjectHideFlags: 0

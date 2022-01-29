@@ -37,7 +37,9 @@ public class GameManager : MonoBehaviour
         screenFade = FindObjectOfType<ScreenFades>();
         screenFade.Setup();
         pauseMenu = FindObjectOfType<PauseMenu>();
+        pauseMenu.Setup();
         levelEnd = FindObjectOfType<LevelEnd>();
+        levelEnd.Setup();
 
         gameState = GameStates.InGame;
         levelData = GetComponent<LevelData>();
@@ -56,12 +58,12 @@ public class GameManager : MonoBehaviour
             if (gameState == GameStates.InGame)
             {
                 screenFade.FadeOut();
-                PauseMenu.instance.OpenPauseMenu();
+                pauseMenu.OpenPauseMenu();
             }
             else if (gameState == GameStates.PauseMenu)
             {
                 screenFade.FadeIn();
-                PauseMenu.instance.ClosePauseMenu();
+                pauseMenu.ClosePauseMenu();
             }
         }
 
