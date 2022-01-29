@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,8 +23,6 @@ public class Block
 
     public bool isA;
    
-
-    
     public Block(bool isA , Vector2Int startingGridRef, GameObject blockPrefab , Board boardA , Board boardB , Clue clue)
     {
         pos = startingGridRef;
@@ -42,7 +41,6 @@ public class Block
         blockObjectA = boardA.NewBlockGO(startingGridRef, blockPrefab, this);
         blockObjectB = boardB.NewBlockGO(startingGridRef, blockPrefab, this);
 
-
     }
 
     public void BlockSolved()
@@ -55,5 +53,10 @@ public class Block
         blockObjectA.SetPosition(pos);
         blockObjectB.SetPosition(pos);
     }
-    
+
+    public void DestroyBlocks()
+    {
+        blockObjectA.DestroyBlock();
+        blockObjectB.DestroyBlock();
+    }
 }   

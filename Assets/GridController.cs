@@ -51,6 +51,9 @@ public class GridController : MonoBehaviour
     {
         Vector2Int newPos = currentBlock.pos + movement;
 
+        newPos = ConfirnNewPosition(newPos);
+
+        //Is Horizontal movement valid
         if (CheckForBlockAdjacent(newPos, movement.x))
         {
             newPos.x = currentBlock.pos.x;
@@ -97,6 +100,12 @@ public class GridController : MonoBehaviour
         currentBlock.UpdateBlockObjectPositions(newPos);
 
     }
+
+    private Vector2Int ConfirnNewPosition(Vector2Int newPos)
+    {
+        return newPos;
+    }
+
     private bool CheckForBlockAdjacent(Vector2Int newPos , int xMoveDirection)
     {
         Block blockAdjacent = null;
@@ -127,7 +136,6 @@ public class GridController : MonoBehaviour
             NewBlock();
         }
         
-
         return newPos;
     }
     private bool CheckForBlockBelow(Vector2Int newPos)
@@ -154,10 +162,10 @@ public class GridController : MonoBehaviour
     }
     private void SetAsGrounded()
     {
-        bool clueMatched = CheckCluesForMatching();
+        CheckCluesForMatching();
         NewBlock();
     }
-    private bool CheckCluesForMatching()
+    private void CheckCluesForMatching()
     {
         bool matchFound = false;
         //CheckBelow
@@ -168,17 +176,18 @@ public class GridController : MonoBehaviour
                 if(blocks[i].clue == currentBlock.answer)
                 {
                     matchFound = true;
-                    currentBlock.BlockSolved();
-                    blocks[i].BlockSolved();
+                   
+                    ClearSolvedBlocks(currentBlock, blocks[i]);
+                    return;
                 }
             }
         }
 
-        if(matchFound)
-        {
-            BlockSolved();
-            return matchFound;
-        }
+        //if(matchFound)
+        //{
+        //    BlockSolved();
+        //    return matchFound;
+        //}
 
         //Check Left
         for (int i = 0; i < blocks.Count; i++)
@@ -188,17 +197,18 @@ public class GridController : MonoBehaviour
                 if (blocks[i].clue == currentBlock.answer)
                 {
                     matchFound = true;
-                    currentBlock.BlockSolved();
-                    blocks[i].BlockSolved();
+                  
+                    ClearSolvedBlocks(currentBlock, blocks[i]);
+                    return;
                 }
             }
         }
 
-        if (matchFound)
-        {
-            BlockSolved();
-            return matchFound;
-        }
+        //if (matchFound)
+        //{
+        //    BlockSolved();
+        //    return matchFound;
+        //}
 
         //Check Right
         for (int i = 0; i < blocks.Count; i++)
@@ -208,18 +218,52 @@ public class GridController : MonoBehaviour
                 if (blocks[i].clue == currentBlock.answer)
                 {
                     matchFound = true;
-                    currentBlock.BlockSolved();
-                    blocks[i].BlockSolved();
+
+                    ClearSolvedBlocks(blocks[i], currentBlock);
+                    return;
+
                 }
             }
         }
 
         
-        if(matchFound)
+        //if(matchFound)
+        //{
+        //    BlockSolved();
+        //}
+        //return matchFound;
+    }
+    private void ClearSolvedBlocks(Block blockA, Block blockB)
+    {
+        blockA.BlockSolved();
+        blockB.BlockSolved();
+
+        DestroyBlock(blockA);
+        blocks.Remove(blockA);
+
+
+        DestroyBlock(blockB);
+        blocks.Remove(blockB);
+
+        UpdatePositionOfAllAboveBlocks(blockA.pos);
+        UpdatePositionOfAllAboveBlocks(blockB.pos);
+    }
+    private void UpdatePositionOfAllAboveBlocks(Vector2Int pos)
+    {
+        for (int i = 0; i < blocks.Count; i++)
         {
-            BlockSolved();
+            if(blocks[i].pos == new Vector2Int(pos.x , pos.y + 1))
+            {
+                currentBlock = blocks[i];
+                MoveBlock(new Vector2Int(0, -1));
+
+                UpdatePositionOfAllAboveBlocks(new Vector2Int(pos.x, pos.y));
+            }
         }
-        return matchFound;
+    }
+    private void DestroyBlock(Block block)
+    {
+        block.DestroyBlocks();
     }
     public void BlockSolved()
     {

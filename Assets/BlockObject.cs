@@ -46,4 +46,11 @@ public class BlockObject : MonoBehaviour
         return new Vector3(gridRef.x, gridRef.y, 0);
     }
 
+    public void DestroyBlock()
+    {
+        board.blockObjects.Remove(this);
+        Destroy(tmp.gameObject);
+        Destroy(gameObject);
+    }
+
 }

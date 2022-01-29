@@ -716,7 +716,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.5
+  orthographic size: 7.69
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2268,8 +2268,8 @@ MonoBehaviour:
     b: Sad
   - a: word
     b: unword
-  - a: Happy
-    b: Sad
+  - a: Plus
+    b: Minus
   cluesB: []
 --- !u!114 &1850616479
 MonoBehaviour:

@@ -36,46 +36,17 @@ public class Clues : MonoBehaviour
 
     private Clue GetNewClueA()
     {
-        int n;
+        int n = Random.Range(0, clues.Count - 1);
 
-        bool clueFound = false;
-        Clue clue = null;
-
-        while(clueFound == false)
-        {
-            n = Random.Range(0, clues.Count - 1);
-
-            if(clues[n] != null)
-            {
-                clueFound = true;
-                clue = clues[n];
-            }
-        }
-
-        clues.Remove(clue);
+        Clue clue = clues[n]; ;
 
         return clue;
     }
     private Clue GetNewClueB()
     {
-        int n;
+        int n = Random.Range(0, cluesB.Count - 1);
 
-        bool clueFound = false;
-        Clue clue = null;
-
-        while (clueFound == false)
-        {
-            n = Random.Range(0, cluesB.Count - 1);
-
-            if (cluesB[n] != null)
-            {
-                clueFound = true;
-                clue = cluesB[n];
-            }
-        }
-
-        cluesB.Remove(clue);
-
+        Clue clue = cluesB[n];
 
         return clue;
     }
