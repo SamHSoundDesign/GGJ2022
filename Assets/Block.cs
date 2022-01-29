@@ -38,8 +38,8 @@ public class Block
             answer = clue.a;
         }
 
-        blockObjectA = boardA.NewBlockGO(startingGridRef, blockPrefab, this);
-        blockObjectB = boardB.NewBlockGO(startingGridRef, blockPrefab, this);
+        blockObjectA = boardA.NewBlockGO(startingGridRef, blockPrefab, this , isA);
+        blockObjectB = boardB.NewBlockGO(startingGridRef, blockPrefab, this , isA);
 
     }
 
@@ -58,5 +58,8 @@ public class Block
     {
         blockObjectA.DestroyBlock();
         blockObjectB.DestroyBlock();
+
+        GameManager.instance.UpdateScore(1);
+
     }
 }   
