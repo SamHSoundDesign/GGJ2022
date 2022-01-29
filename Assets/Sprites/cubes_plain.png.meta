@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: f2f4025495a6da24db01aba19cdcee86
+guid: 40f2a7d9822079346a1e09706f6c9717
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 690098421888269221
-    second: cube 32x32_0
+      213: 7051174425163300419
+    second: cubes_plain_0
   - first:
-      213: -2838142617064065510
-    second: cube 32x32_1
+      213: -2081456262460363162
+    second: cubes_plain_1
+  - first:
+      213: 8845762436952548248
+    second: cubes_plain_2
+  - first:
+      213: -1759796500201962415
+    second: cubes_plain_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,7 +127,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cube 32x32_0
+      name: cubes_plain_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ab35b0cbd8b39900800000000000000
-      internalID: 690098421888269221
+      spriteID: 34e7d2de7cdcad160800000000000000
+      internalID: 7051174425163300419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cube 32x32_1
+      name: cubes_plain_1
       rect:
         serializedVersion: 2
         x: 32
@@ -156,8 +162,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a16bfffa354ec98d0800000000000000
-      internalID: -2838142617064065510
+      spriteID: 66ea98cae8e2d13e0800000000000000
+      internalID: -2081456262460363162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cubes_plain_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893ec0ec11672ca70800000000000000
+      internalID: 8845762436952548248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cubes_plain_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1548c782862f397e0800000000000000
+      internalID: -1759796500201962415
       vertices: []
       indices: 
       edges: []
