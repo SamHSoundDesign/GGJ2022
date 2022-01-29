@@ -8,4 +8,14 @@ public class MainMenuUI : MonoBehaviour
     {
         LevelLoader.instance.LoadScene(index);
     }
+
+    public void SFXMouseHover()
+    {
+        AudioManager.instance.PlayAudioClip("MouseHover");
+    }
+
+    public void SFXUISelect()
+    {
+        AudioManager.instance.PlayAudioClip("UIClick");
+    }
 }

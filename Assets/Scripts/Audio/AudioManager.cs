@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public List<AudioFiles> audioFiles;
+    public static AudioManager instance;
+    public List<AudioFile> audioFiles;
 
     private AudioSource audioSoure;
 
+    
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     private void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         audioSoure = GetComponent<AudioSource>();
     }
-
     public void PlayAudioEvent(AudioEvents audioEvent)
     {
         switch (audioEvent)
@@ -31,11 +46,15 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
-
-
-    public AudioFiles FindAudioClip(string clipID)
+    public AudioFile FindAudioClip(string clipID)
     {
-        AudioFiles audioFile = null;
+        AudioFile audioFile = null;
+
+        if(audioFiles.Count == 0)
+        {
+            Debug.Log("AudioManager : List of audio files is empty");
+            return null;
+        }
 
         for (int i = 0; i < audioFiles.Count; i++)
         {
@@ -54,14 +73,16 @@ public class AudioManager : MonoBehaviour
         {
             return null;
         }
-
-
-
     }
-
     public void PlayAudioClip(string clipID)
     {
-        AudioFiles audioFile = FindAudioClip(clipID);
+        AudioFile audioFile = FindAudioClip(clipID);
+
+        if(audioFile == null)
+        {
+            Debug.Log("No audioFile with ID " + clipID + " has been found");
+            return;
+        }
 
         if (audioSoure.isPlaying != true)
         {
