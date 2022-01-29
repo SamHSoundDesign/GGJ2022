@@ -7,17 +7,12 @@ public class UserInput : MonoBehaviour
 {
     private Vector2Int movement;
 
-    [SerializeField] private float pauseBetweenDrops = 1;
+    public float pauseBetweenDrops;
     private float timeForNextDrop;
 
     public GridController blockController;
 
-    private void Start()
-    {
-        UpdateNextDropTime();
-    }
-
-    private void Update()
+    public void Updates()
     {
         movement = Vector2Int.zero;
 
@@ -51,7 +46,7 @@ public class UserInput : MonoBehaviour
 
     }
 
-    private void UpdateNextDropTime()
+    public void UpdateNextDropTime()
     {
         timeForNextDrop = Time.time + pauseBetweenDrops;
     }

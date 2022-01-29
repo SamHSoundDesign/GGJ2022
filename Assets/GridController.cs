@@ -10,6 +10,7 @@ public class GridController : MonoBehaviour
     private List<Block> blocks = new List<Block>();
     public GameObject blockPrefab;
     private Clues clues;
+    private List<ClueSO> levelClues;
     private bool isA = false;
 
     public bool blockControllerA;
@@ -20,15 +21,26 @@ public class GridController : MonoBehaviour
     public Board boardA;
     public Board boardB;
 
-    public Vector2Int startingGridRef;
+    private Vector2Int startingGridRef;
 
-    
-    private void Start()
+    public void Setup(Board boardA, Board boardB, List<ClueSO> levelClues , PlayGrid playGrid)
     {
-        clues = GetComponent<Clues>();
+        this.boardA = boardA;
+        this.boardB = boardB;
+        this.levelClues = levelClues;
+        this.playGrid = playGrid;
+        startingGridRef = new Vector2Int(playGrid.gridWidth / 2, playGrid.gridHeight);
+
         styling = GetComponent<BlockControllerStyling>();
         NewBlock();
     }
+    private ClueSO GetNewClue()
+    {
+        int n = UnityEngine.Random.Range(0, levelClues.Count - 1);
+
+        return levelClues[n];
+    }
+ 
     public void NewBlock()
     {
         isA = !isA;
@@ -36,7 +48,7 @@ public class GridController : MonoBehaviour
         boardA.RevealBoardDetails();
         boardB.RevealBoardDetails();
 
-        Clue newClue = clues.GetNewClue(isA);
+        ClueSO newClue = GetNewClue();
         Block newBlock = new Block(isA , startingGridRef , blockPrefab , boardA , boardB , newClue);
 
         currentBlock = newBlock;
