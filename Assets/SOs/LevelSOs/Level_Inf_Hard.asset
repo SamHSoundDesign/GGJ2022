@@ -17,3 +17,4 @@ MonoBehaviour:
   levelSpeed: 5
   gridWidth: 9
   failHeight: 9
+  targetScore: 5

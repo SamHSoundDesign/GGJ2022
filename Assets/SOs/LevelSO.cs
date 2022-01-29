@@ -12,5 +12,7 @@ public class LevelSO : ScriptableObject
     public int gridWidth;
     public int failHeight;
 
+    public int targetScore;
+
 
 }

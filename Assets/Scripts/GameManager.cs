@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,16 +9,17 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private LevelEnd levelEnd;
 
     private GameStates gameState;
-    public int score;
+    public int currentScore;
     public GameObject inGameUI;
 
     private LevelData levelData;
     public PlayGrid playGrid;
     public UserInput userInput;
     public GridController gridController;
-
+    private int targetScore;
 
     private void Start()
     {
@@ -30,10 +32,13 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
+        pauseMenu = PauseMenu.instance;
+        levelEnd = LevelEnd.instance;
+        levelEnd.gameObject.SetActive(false);
+
         gameState = GameStates.InGame;
         levelData = GetComponent<LevelData>();
         userInput = GetComponent<UserInput>();
-
         SetupLevel();
 
     }
@@ -86,10 +91,26 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(int score)
     {
-        this.score += score;
-        inGameUI.GetComponent<TextMeshProUGUI>().text = this.score.ToString();
+        currentScore += score;
+
+        if(currentScore >= targetScore)
+        {
+            LevelWon();
+        }
+
+        inGameUI.GetComponent<TextMeshProUGUI>().text = this.currentScore.ToString();
     }
 
+    private void LevelWon()
+    {
+        gameState = GameStates.LevelComplete;
+        levelEnd.OpenMenu();
+    }
+
+    public void LevelLost()
+    {
+
+    }
 
     public void SetupLevel()
     {
@@ -113,6 +134,8 @@ public class GameManager : MonoBehaviour
         }
 
         LevelSO levelSO = levelData.GetLevelSO();
+
+        targetScore = levelSO.targetScore;
 
         boardA.SetBoardPosition(new Vector3(-levelSO.gridWidth , 0, 0));
         boardB.SetBoardPosition(new Vector3(levelSO.gridWidth , 0, 0));
