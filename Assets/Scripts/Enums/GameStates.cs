@@ -2,5 +2,6 @@ public enum GameStates
 {
    MainMenu,
    InGame,
-   PauseMenu
+   PauseMenu,
+   LevelComplete
 }
