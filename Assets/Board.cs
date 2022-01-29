@@ -31,9 +31,9 @@ public class Board : MonoBehaviour
 
    
 
-    public void SetPosition()
+    public void SetBoardPosition(Vector3 pos)
     {
-
+        transform.position = pos;
     }
 
     public void RevealBoardDetails()

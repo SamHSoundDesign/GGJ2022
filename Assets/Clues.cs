@@ -13,7 +13,6 @@ public class Clues : MonoBehaviour
         {
             cluesB.Add(clues[i]);
         }
-        
     }
 
 

@@ -23,7 +23,7 @@ public class Block
 
     public bool isA;
    
-    public Block(bool isA , Vector2Int startingGridRef, GameObject blockPrefab , Board boardA , Board boardB , Clue clue)
+    public Block(bool isA , Vector2Int startingGridRef, GameObject blockPrefab , Board boardA , Board boardB , ClueSO clue)
     {
         pos = startingGridRef;
         this.isA = isA;
