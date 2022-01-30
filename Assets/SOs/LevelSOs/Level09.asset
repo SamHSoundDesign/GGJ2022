@@ -24,5 +24,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 625aff5ce973ffc4d829cb74084512fa, type: 2}
   levelSpeed: 1
   gridWidth: 5
-  failHeight: 9
+  failHeight: 5
   targetScore: 10

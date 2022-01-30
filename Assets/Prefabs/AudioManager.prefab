@@ -51,25 +51,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioFiles:
   - clipID: MouseHover
-    audioClip: {fileID: 8300000, guid: bca3e91c07afc934fa0cc887efbde3a6, type: 3}
+    audioClip: {fileID: 8300000, guid: b064987574307a942a75ac671a192747, type: 3}
     isOneShot: 1
-    volume: 0.4
+    volume: 0.6
   - clipID: Pop
     audioClip: {fileID: 8300000, guid: dd54b79abf835144bb607494d4ff213d, type: 3}
     isOneShot: 1
-    volume: 0.4
+    volume: 0.6
   - clipID: UIClick
     audioClip: {fileID: 8300000, guid: 2a67d6e67ffaefa40852e7bd0c094604, type: 3}
     isOneShot: 1
-    volume: 0.25
+    volume: 0.6
   - clipID: Grounded
     audioClip: {fileID: 8300000, guid: 18e4abdb954b9a044bd93e7cf42b704f, type: 3}
     isOneShot: 1
-    volume: 0.4
+    volume: 0.6
   - clipID: Whoosh
     audioClip: {fileID: 8300000, guid: df73147e03bb3444286e96fd4a4c9036, type: 3}
     isOneShot: 1
-    volume: 0.8
+    volume: 0.6
   audioSoure:
   - {fileID: 1925819676747943399}
   - {fileID: 5245235694435810241}
@@ -602,7 +602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: {fileID: 8300000, guid: e3b35a246d9c03b4b884883f44edd7a9, type: 3}
   audioSource: {fileID: 2438052573307272091}
-  musicVolume: 0.3
+  musicVolume: 1
 --- !u!82 &2438052573307272091
 AudioSource:
   m_ObjectHideFlags: 0

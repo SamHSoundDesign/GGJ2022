@@ -21,6 +21,8 @@ public class LevelEnd : MonoBehaviour
     //Pause Menu animation
     public void OpenMenu(string message)
     {
+        GameManager.instance.screenFade.FadeOut();
+
         tmp.text = message;
         gameObject.SetActive(true);
         anim.SetTrigger("Open");
@@ -29,6 +31,8 @@ public class LevelEnd : MonoBehaviour
 
     public void ClosePauseMenu()
     {
+        GameManager.instance.screenFade.FadeIn();
+
         anim.SetTrigger("Open");
     }
 
