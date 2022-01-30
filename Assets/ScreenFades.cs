@@ -18,12 +18,15 @@ public class ScreenFades : MonoBehaviour
 
     public void FadeIn()
     {
+        AudioManager.instance.PlayAudioClip("Whoosh");
         anim.SetBool("FadeIn" , fadedIn);
         fadedIn = false;
     }
 
     public void FadeOut()
     {
+        AudioManager.instance.PlayAudioClip("Whoosh");
+
         anim.SetBool("FadeIn", fadedIn);
         fadedIn = true;
 

@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     public List<AudioFile> audioFiles;
 
-    private AudioSource audioSoure;
+    public List<AudioSource> audioSoure;
 
     private float hoverOverTimerAmout = 0.15f;
     private float nextTimeHoverOverCanPlay = 0;
@@ -29,7 +29,6 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        audioSoure = GetComponent<AudioSource>();
     }
     public void PlayAudioEvent(AudioEvents audioEvent)
     {
@@ -100,20 +99,41 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        if (audioSoure.isPlaying != true)
+        AudioSource source = GetAvailableAudioSource();
+
+        if(source == null)
         {
-            if(audioFile.isOneShot)
-            {
-                audioSoure.PlayOneShot(audioFile.audioClip);
-            }
+            return;
         }
-        else
+       
+        if(audioFile.isOneShot)
         {
-            Debug.Log("Audio Source is already playing. Audio Clip name is " + audioSoure.clip.name);
+            source.volume = audioFile.volume;
+            source.PlayOneShot(audioFile.audioClip);
         }
+        
+        
     }
     public void StartTimer()
     {
         nextTimeHoverOverCanPlay = Time.time + hoverOverTimerAmout;
     }
+
+    public AudioSource GetAvailableAudioSource()
+    {
+        AudioSource source = null;
+
+        for (int i = 0; i < audioSoure.Count; i++)
+        {
+            if(audioSoure[i].isPlaying != true)
+            {
+                return audioSoure[i];
+            }
+        }
+
+        return source;
+
+
+    }
+
 }

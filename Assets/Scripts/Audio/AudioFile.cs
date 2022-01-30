@@ -8,5 +8,6 @@ public class AudioFile
     public string clipID;
     public AudioClip audioClip;
     public bool isOneShot;
+    public float volume;
 
 }

@@ -244,6 +244,7 @@ public class GridController : MonoBehaviour
         if(matchedBlocks.Count > 0)
         {
             ClearSolvedBlock(block);
+            AudioManager.instance.PlayAudioClip("Pop");
 
             for (int i = 0; i < matchedBlocks.Count; i++)
             {
@@ -255,10 +256,15 @@ public class GridController : MonoBehaviour
                 UpdatePositionOfAllAboveBlocks(matchedBlocks[i].pos);
             }
         }
+        else
+        {
+            AudioManager.instance.PlayAudioClip("Grounded");
 
-       
+        }
 
-       
+
+
+
 
     }
 
