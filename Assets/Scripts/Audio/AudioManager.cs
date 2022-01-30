@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public List<AudioFiles> audioFiles;
+    public static AudioManager instance;
+    public List<AudioFile> audioFiles;
 
     private AudioSource audioSoure;
 
+    private float hoverOverTimerAmout = 0.15f;
+    private float nextTimeHoverOverCanPlay = 0;
+
+    
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     private void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         audioSoure = GetComponent<AudioSource>();
     }
-
     public void PlayAudioEvent(AudioEvents audioEvent)
     {
         switch (audioEvent)
@@ -31,11 +49,15 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
-
-
-    public AudioFiles FindAudioClip(string clipID)
+    public AudioFile FindAudioClip(string clipID)
     {
-        AudioFiles audioFile = null;
+        AudioFile audioFile = null;
+
+        if(audioFiles.Count == 0)
+        {
+            Debug.Log("AudioManager : List of audio files is empty");
+            return null;
+        }
 
         for (int i = 0; i < audioFiles.Count; i++)
         {
@@ -54,14 +76,29 @@ public class AudioManager : MonoBehaviour
         {
             return null;
         }
-
-
-
     }
-
     public void PlayAudioClip(string clipID)
     {
-        AudioFiles audioFile = FindAudioClip(clipID);
+        if(clipID == "MouseHover")
+        {
+            if (Time.time < nextTimeHoverOverCanPlay)
+            {
+                Debug.Log("Too soon since last MouseHover sfx");
+                return;
+            }
+            else
+            {
+                StartTimer();
+            }
+        }
+
+        AudioFile audioFile = FindAudioClip(clipID);
+
+        if(audioFile == null)
+        {
+            Debug.Log("No audioFile with ID " + clipID + " has been found");
+            return;
+        }
 
         if (audioSoure.isPlaying != true)
         {
@@ -74,5 +111,9 @@ public class AudioManager : MonoBehaviour
         {
             Debug.Log("Audio Source is already playing. Audio Clip name is " + audioSoure.clip.name);
         }
+    }
+    public void StartTimer()
+    {
+        nextTimeHoverOverCanPlay = Time.time + hoverOverTimerAmout;
     }
 }

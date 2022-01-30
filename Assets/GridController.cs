@@ -22,16 +22,18 @@ public class GridController : MonoBehaviour
     public Board boardB;
 
     private Vector2Int startingGridRef;
+    private int deathLine;
 
     
 
-    public void Setup(Board boardA, Board boardB, List<ClueSO> levelClues , PlayGrid playGrid)
+    public void Setup(Board boardA, Board boardB, List<ClueSO> levelClues , PlayGrid playGrid , int deathLine)
     {
         this.boardA = boardA;
         this.boardB = boardB;
         this.levelClues = levelClues;
         this.playGrid = playGrid;
-        startingGridRef = new Vector2Int(playGrid.gridWidth / 2, playGrid.gridHeight);
+        startingGridRef = new Vector2Int(playGrid.gridWidth / 2 + 1, 7);
+        this.deathLine = deathLine;
 
 
         styling = GetComponent<BlockControllerStyling>();
@@ -83,6 +85,12 @@ public class GridController : MonoBehaviour
 
         if(CheckIfGrounded(block))
         {
+            if(block.pos.y >= deathLine)
+            {
+                GameManager.instance.LevelLost();
+                return;
+            }
+
             block.grounded = true;
             CheckCluesForMatching(block);
 
@@ -112,6 +120,7 @@ public class GridController : MonoBehaviour
                 return isGrounded;
             }
         }
+
 
         return isGrounded;
     }

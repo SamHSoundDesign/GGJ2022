@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
 
     public ScreenFades screenFade;
 
+    private List<string> winMessages = new List<string>() { "Nailed it." , "You wind" , "Done it"};
+    private List<string> loseMessages = new List<string>() { "Almost..." , "You lose" , "Try again"};
+
     private void Start()
     {
         if (instance == null)
@@ -37,7 +40,9 @@ public class GameManager : MonoBehaviour
         screenFade = FindObjectOfType<ScreenFades>();
         screenFade.Setup();
         pauseMenu = FindObjectOfType<PauseMenu>();
+        pauseMenu.Setup();
         levelEnd = FindObjectOfType<LevelEnd>();
+        levelEnd.Setup();
 
         gameState = GameStates.InGame;
         levelData = GetComponent<LevelData>();
@@ -45,6 +50,11 @@ public class GameManager : MonoBehaviour
         SetupLevel();
 
         screenFade.FadeIn();
+
+        DeathLine deathLine = FindObjectOfType<DeathLine>();
+        deathLine.SetDeathLine(levelData.GetLevelSO().failHeight);
+
+        
 
     }
 
@@ -56,12 +66,12 @@ public class GameManager : MonoBehaviour
             if (gameState == GameStates.InGame)
             {
                 screenFade.FadeOut();
-                PauseMenu.instance.OpenPauseMenu();
+                pauseMenu.OpenPauseMenu();
             }
             else if (gameState == GameStates.PauseMenu)
             {
                 screenFade.FadeIn();
-                PauseMenu.instance.ClosePauseMenu();
+                pauseMenu.ClosePauseMenu();
             }
         }
 
@@ -114,11 +124,19 @@ public class GameManager : MonoBehaviour
 
         gameState = GameStates.LevelComplete;
         levelEnd.gameObject.SetActive(true);
-        levelEnd.OpenMenu();
+        levelEnd.OpenMenu(GetMessage(winMessages));
     }
 
     public void LevelLost()
     {
+
+        screenFade.FadeIn();
+
+        gameState = GameStates.LevelLost;
+        levelEnd.gameObject.SetActive(true);
+        levelEnd.OpenMenu(GetMessage(loseMessages));
+
+
 
     }
 
@@ -156,7 +174,7 @@ public class GameManager : MonoBehaviour
         userInput.pauseBetweenDrops = levelSO.levelSpeed * 3 / 10;
         userInput.UpdateNextDropTime();
 
-        gridController.Setup(boardA , boardB , levelSO.clues , playGrid);
+        gridController.Setup(boardA , boardB , levelSO.clues , playGrid , levelSO.failHeight);
 
         StartLevel();
 
@@ -166,6 +184,13 @@ public class GameManager : MonoBehaviour
     {
         gameState = GameStates.InGame;
         userInput.UpdateNextDropTime();
+    }
+
+    private string GetMessage(List<string> strings)
+    {
+        int n = UnityEngine.Random.Range(0, strings.Count - 1);
+
+        return strings[n];
     }
 }
 

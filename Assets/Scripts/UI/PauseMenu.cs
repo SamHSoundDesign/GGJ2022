@@ -8,20 +8,11 @@ public class PauseMenu : MonoBehaviour
 
     private Animator anim;
 
-    private void Start()
+    public void Setup()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-
-        gameObject.SetActive(false);
 
         anim = GetComponent<Animator>();
+        gameObject.SetActive(false);
     }
 
     //Pause Menu animation
@@ -54,5 +45,10 @@ public class PauseMenu : MonoBehaviour
     public void ExitGame()
     {
 
+    }
+
+    public void ExitToMainMenu()
+    {
+        LevelLoader.instance.GoToMenu();
     }
 }

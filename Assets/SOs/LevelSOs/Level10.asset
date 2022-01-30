@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 625aff5ce973ffc4d829cb74084512fa, type: 2}
   - {fileID: 11400000, guid: f05f7f6838e6301459c6153eb83a4700, type: 2}
   - {fileID: 11400000, guid: 86e445b572c8f1141ac997e85b943afa, type: 2}
-  levelSpeed: 3
+  levelSpeed: 1
   gridWidth: 5
   failHeight: 9
-  targetScore: 5
+  targetScore: 10

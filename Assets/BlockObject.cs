@@ -11,6 +11,9 @@ public class BlockObject : MonoBehaviour
     private SpriteRenderer rend;
     public bool isA;
 
+    public GameObject deathParticleLight;
+    public GameObject deathParticleDark;
+
     public void Setup(Vector2Int gridRef , string clue, Board board , Color colorA , Color colorB , bool isA)
     {
         tmp = GetComponentInChildren<TextMeshPro>();
@@ -50,9 +53,22 @@ public class BlockObject : MonoBehaviour
 
     public void DestroyBlock()
     {
+        InitiateParticle();
         board.blockObjects.Remove(this);
         Destroy(tmp.gameObject);
         Destroy(gameObject);
     }
 
+    private void InitiateParticle()
+    {
+        if(isA)
+        {
+            Instantiate(deathParticleLight, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(deathParticleDark, transform.position, Quaternion.identity);
+
+        }
+    }
 }

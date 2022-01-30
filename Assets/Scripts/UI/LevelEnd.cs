@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LevelEnd : MonoBehaviour
@@ -7,21 +8,23 @@ public class LevelEnd : MonoBehaviour
     public static LevelEnd instance;
 
     private Animator anim;
+    public TextMeshProUGUI tmp;
 
-    private void Start()
+    public void Setup()
     {
-        gameObject.SetActive(false);
 
         anim = GetComponent<Animator>();
+        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     //Pause Menu animation
-    public void OpenMenu()
+    public void OpenMenu(string message)
     {
+        tmp.text = message;
         gameObject.SetActive(true);
         anim.SetTrigger("Open");
-        GameManager.instance.SetGameState(GameStates.PauseMenu);
-
+        
     }
 
     public void ClosePauseMenu()
@@ -32,9 +35,18 @@ public class LevelEnd : MonoBehaviour
     public void ReadyToClose()
     {
         Debug.Log("CLOSED");
-        GameManager.instance.SetGameState(GameStates.InGame);
         gameObject.SetActive(false);
     }
 
-    
+    public void ReplayLevel()
+    {
+        LevelLoader.instance.ReplayScene();
+    }
+
+    public void NextLevel()
+    {
+        LevelLoader.instance.NextScene();
+    }
+
+
 }
