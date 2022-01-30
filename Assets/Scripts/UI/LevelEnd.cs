@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LevelEnd : MonoBehaviour
@@ -7,6 +8,7 @@ public class LevelEnd : MonoBehaviour
     public static LevelEnd instance;
 
     private Animator anim;
+    public TextMeshProUGUI tmp;
 
     public void Setup()
     {
@@ -17,12 +19,12 @@ public class LevelEnd : MonoBehaviour
     }
 
     //Pause Menu animation
-    public void OpenMenu()
+    public void OpenMenu(string message)
     {
+        tmp.text = message;
         gameObject.SetActive(true);
         anim.SetTrigger("Open");
         
-
     }
 
     public void ClosePauseMenu()

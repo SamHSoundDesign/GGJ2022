@@ -9,6 +9,9 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource audioSoure;
 
+    private float hoverOverTimerAmout = 0.15f;
+    private float nextTimeHoverOverCanPlay = 0;
+
     
 
     private void Awake()
@@ -76,6 +79,19 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayAudioClip(string clipID)
     {
+        if(clipID == "MouseHover")
+        {
+            if (Time.time < nextTimeHoverOverCanPlay)
+            {
+                Debug.Log("Too soon since last MouseHover sfx");
+                return;
+            }
+            else
+            {
+                StartTimer();
+            }
+        }
+
         AudioFile audioFile = FindAudioClip(clipID);
 
         if(audioFile == null)
@@ -95,5 +111,9 @@ public class AudioManager : MonoBehaviour
         {
             Debug.Log("Audio Source is already playing. Audio Clip name is " + audioSoure.clip.name);
         }
+    }
+    public void StartTimer()
+    {
+        nextTimeHoverOverCanPlay = Time.time + hoverOverTimerAmout;
     }
 }
