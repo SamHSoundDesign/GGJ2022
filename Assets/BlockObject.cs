@@ -14,11 +14,23 @@ public class BlockObject : MonoBehaviour
     public GameObject deathParticleLight;
     public GameObject deathParticleDark;
 
+    public Sprite blackBlock;
+    public Sprite whiteBlock;
+
     public void Setup(Vector2Int gridRef , string clue, Board board , Color colorA , Color colorB , bool isA)
     {
         tmp = GetComponentInChildren<TextMeshPro>();
         rend = GetComponent<SpriteRenderer>();
         this.isA = isA;
+
+        if(board.isBoardA)
+        {
+            rend.sprite = blackBlock;
+        }
+        else
+        {
+            rend.sprite = whiteBlock;
+        }
 
         this.board = board;
         SetPosition(gridRef);
@@ -31,12 +43,12 @@ public class BlockObject : MonoBehaviour
     {
         if(board.isBoardA)
         {
-            rend.color = colorA;
+            //rend.color = colorA;
             tmp.color = colorB;
         }
         else
         {
-            rend.color = colorB;
+            //rend.color = colorB;
             tmp.color = colorA;
         }
     }

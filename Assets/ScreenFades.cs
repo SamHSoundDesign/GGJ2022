@@ -7,7 +7,7 @@ public class ScreenFades : MonoBehaviour
     private string fadeInTrigger = "In";
     private string fadeOutTrigger = "Out";
 
-    private bool fadedIn = true;
+    private bool fadedIn = false;
 
     private Animator anim;
 
@@ -18,17 +18,22 @@ public class ScreenFades : MonoBehaviour
 
     public void FadeIn()
     {
-        AudioManager.instance.PlayAudioClip("Whoosh");
-        anim.SetBool("FadeIn" , fadedIn);
         fadedIn = false;
+
+        if(AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayAudioClip("Whoosh");
+
+        }
+        anim.SetBool("FadeIn" , !fadedIn);
     }
 
     public void FadeOut()
     {
+        fadedIn = true;
         AudioManager.instance.PlayAudioClip("Whoosh");
 
-        anim.SetBool("FadeIn", fadedIn);
-        fadedIn = true;
+        anim.SetBool("FadeIn", !fadedIn);
 
 
     }

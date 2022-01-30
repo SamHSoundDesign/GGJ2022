@@ -6,6 +6,12 @@ public class MainMenuUI : MonoBehaviour
 {
     public void LoadScene(int index)
     {
+
+        if(MenuSceneFades.instanace != null)
+        {
+            MenuSceneFades.instanace.screenFade.FadeIn();
+        }
+
         LevelLoader.instance.LoadScene(index);
     }
 

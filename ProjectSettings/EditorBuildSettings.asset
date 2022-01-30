@@ -38,4 +38,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/InfiniteLevel.unity
     guid: cb0041aa471c942409b46d4b16ce1ae8
+  - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 184e8aaa416e6224f8812d0a42b69eb3
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 44abc344ed0bbbd4f8ca1220a0d796f7
   m_configObjects: {}

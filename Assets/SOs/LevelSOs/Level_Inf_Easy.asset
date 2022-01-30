@@ -13,8 +13,19 @@ MonoBehaviour:
   m_Name: Level_Inf_Easy
   m_EditorClassIdentifier: 
   levelID: 97
-  clues: []
-  levelSpeed: 1
+  clues:
+  - {fileID: 11400000, guid: 249a6f8e3cb2d5741868060f7b944573, type: 2}
+  - {fileID: 11400000, guid: 883ea0d196f6a604496265effabdad9a, type: 2}
+  - {fileID: 11400000, guid: d7d9c3d2557282d418a4d2ccb9989511, type: 2}
+  - {fileID: 11400000, guid: 7b31805b0310cf94caf486c68f0c4a04, type: 2}
+  - {fileID: 11400000, guid: c2493a9f49c63014891db959d0a3f1b7, type: 2}
+  - {fileID: 11400000, guid: 35d60afdc86e8034286971864fcbb580, type: 2}
+  - {fileID: 11400000, guid: fc453ebecd65b4c4c9397ac5ba1e4074, type: 2}
+  - {fileID: 11400000, guid: 9e508f321de86fb4e81bff0630f342e4, type: 2}
+  - {fileID: 11400000, guid: 625aff5ce973ffc4d829cb74084512fa, type: 2}
+  - {fileID: 11400000, guid: f05f7f6838e6301459c6153eb83a4700, type: 2}
+  - {fileID: 11400000, guid: 86e445b572c8f1141ac997e85b943afa, type: 2}
+  levelSpeed: 2
   gridWidth: 5
-  failHeight: 9
+  failHeight: 6
   targetScore: 10000

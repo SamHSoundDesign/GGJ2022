@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public ScreenFades screenFade;
 
-    private List<string> winMessages = new List<string>() { "Nailed it." , "You wind" , "Done it"};
+    private List<string> winMessages = new List<string>() { "Nailed it." , "You win" , "Done it"};
     private List<string> loseMessages = new List<string>() { "Almost..." , "You lose" , "Try again"};
 
     private void Start()
@@ -65,12 +65,12 @@ public class GameManager : MonoBehaviour
         {
             if (gameState == GameStates.InGame)
             {
-                screenFade.FadeOut();
+                //screenFade.FadeOut();
                 pauseMenu.OpenPauseMenu();
             }
             else if (gameState == GameStates.PauseMenu)
             {
-                screenFade.FadeIn();
+                //screenFade.FadeIn();
                 pauseMenu.ClosePauseMenu();
             }
         }

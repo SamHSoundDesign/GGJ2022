@@ -18,6 +18,8 @@ public class PauseMenu : MonoBehaviour
     //Pause Menu animation
     public void OpenPauseMenu()
     {
+        GameManager.instance.screenFade.FadeOut();
+
         gameObject.SetActive(true);
         anim.SetTrigger("Open");
         GameManager.instance.SetGameState(GameStates.PauseMenu);
@@ -31,6 +33,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ReadyToClose()
     {
+        GameManager.instance.screenFade.FadeIn();
+
         Debug.Log("CLOSED");
         GameManager.instance.SetGameState(GameStates.InGame);
         gameObject.SetActive(false);
